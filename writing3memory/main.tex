@@ -1,0 +1,81 @@
+
+
+\documentclass[letterpaper, 10 pt, conference]{ieeeconf}  
+\IEEEoverridecommandlockouts
+\overrideIEEEmargins
+\usepackage{color}
+\usepackage{listings}
+
+\title{\LARGE \bf
+Writing 3 - Memory Management
+}
+
+\author{Hannah Solorzano - CS 444 Spring 2017}
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\pagestyle{empty}
+
+\begin{abstract}
+
+This paper will cover the different methods of memory management that are used by the Windows, FreeBSD, and Linux operating systems. The similarities and differences will be discussed as well as why these operating systems chose to utilize the different methods.
+
+\end{abstract}
+
+\section{INTRODUCTION}
+
+In every operating system there is some form of memory management. This process is what's in charge of keeping track of all the pieces of memory, which are then allocated to certain program for a specified amount of time. Each operating system uses different forms of memory management that may specialize in performing specific tasks more efficiently than others. Though differences between these management processes exist, there are also plenty of similarities that they share which enable the processes to function properly.
+
+\section{MEMORY MANAGEMENT}
+
+Within Memory Management (MM) are three categories: Hardware, Operating System, and Application though the exact distinction between the three can sometimes be blurred. Typically Hardware Memory Management can best be described as the physical parts of the computer that stores memory such as RAM, whereas the Application Memory Management (AMM) controls which programs receive memory and when they have to reallocate that memory for another program to use. The Operating System Memory Management (OSMM) is similar to the AMM as they both allocate and deallocate the memory used by programs, but OSMM differs in the way that it is able to trick the computer into thinking that there is more memory available than there really is.\par
+
+\begin{lstlisting}[caption={ The functions that return the virtual memory address },label={lst:label}]
+
+#include <linux/highmem.h>
+void *kmap(struct page *page);
+void kunmap(struct page *page);
+
+\end{lstlisting}
+
+The process of allocating memory requires the OSMM to keep track of the memory addresses and when a program requests the use of memory, the MM links the address of the logical memory to the chunks of physical memory called pages.  When memory is repeatedly allocated and deallocated in these pages, little chunks of unused space called fragmentation appear \cite{1}. There are two types of fragmentation: External fragmentation - where there are too many tiny chunks of memory that are missing which disallows any usable size of memory to not fit on any of the pages, and Internal fragmentation - where the chunk of memory that is giving to the program is bigger than what it needs and therefore, blocks any other program from using any memory. \par
+
+\section{WINDOWS MEMORY MANAGEMENT}
+The amount of virtual memory Windows Memory Management (WMM) accesses is different depending upon the version of Windows used. The 32-bit and 64-bit have 4 gigabytes and 8 terabytes of virtual memory respectively with the process threads able to connect their own virtual memory addresses, but are not able to access another threads' \cite{2}.\par
+As RAM is a limited resource, the virtual memory carefully monitors how much RAM is being used by all the concurrently running programs. If there is no more room in the RAM, the operating system moves the page of memory to physical memory in order to free up space in the RAM.  
+
+\section{FREEBSD MEMORY MANAGEMENT}
+
+Like the Windows implementation of MM, FreeBSD gives each of the processes their own address space that is unable to access the address space of another process. This address space is separated into three types of segments which hold specific parts of a programs process. For example, the text section holds the instructions and is strictly read-only. The data section contains both the initialized and uninitialized data in a process, while the stack section holds the run-time stack. Both the data and the stack section are capable of read and write access \cite{3}.\par
+It could be argued that the way FreeBSD implements MM is a bit outdated and is not capable of performing as fast or efficient as other operating systems. The system was designed to limit the amount of memory that was permitted to each process, though this resulted in a surplus of disk traffic. Another limitation of this particular MM system is that it is not designed to handle the tight group of multiprocessors. This is especially debilitating as more and more computers these days are increasing the number of multiprocessors that they have.
+
+\section{LINUX MEMORY MANAGEMENT}
+
+The Linux MM is similar to both the FreeBSD and Windows implementation as it also uses virtual memory. The virtual memory is not just for creating the illusion of more memory space, it also provides protection to the address spaces, performs memory mapping, and fair physical memory allocation.\par
+
+There are several types of memory that is accessible by the MM such as virtual, physical, bus, kernel logic, and kernel virtual addresses. Though most of these addresses are one-to-one, a few of them like the kernel virtual addresses are stored as pointer variables and do not pertain to a particular physical address \cite{4}.
+\newline
+
+\section{SIMALARITIES AND DIFFERENCES} 
+\subsection{SIMALARITIES}
+The similarities in these MM programs are because of the basic functionality of how the MM works. All three utilize virtual memory to help alleviate the work load from the RAM, while also controlling the way the virtual memory addresses are assigned to the physical memory addresses. 
+\newline
+\subsection{DIFFERENCES}
+The main difference is how much the operating system relies upon the virtual memory and how the pages are allocated. The functions that perform these tasks can differ in regards to what parameters they require, or how it is that they allocate memory to new pages.
+
+\subsection{WHY SIMILARITIES EXIST}
+The similarities between these three operating systems exist because of their basic functionality and the resources they require to perform correctly.
+
+\section{CONCLUSIONS}
+
+Overall, the implementations of MM is similar in most operating systems as they need to perform the same arduous task of assigning memory without denying higher priority programs expedited run time. The differences are few and far between only making certain MM programs specialized in handling tasks. 
+
+\addtolength{\textheight}{-12cm} 
+\bibliographystyle{IEEEtran}
+\bibliography{b}
+
+
+
+
+\end{document}

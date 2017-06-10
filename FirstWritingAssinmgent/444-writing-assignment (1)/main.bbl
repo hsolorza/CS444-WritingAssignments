@@ -1,0 +1,26 @@
+\begin{thebibliography}{McK14}
+
+\bibitem[McK14]{3}
+Marshall~Kirk McKusick.
+\newblock {Thread Scheduling in the FreeBSD Operating System}.
+\newblock
+  \url{http://www.informit.com/articles/article.aspx?p=2249436&seqNum=4/},
+  2014.
+\newblock [Online; accessed 01-May-2017].
+
+\bibitem[Rus09]{1}
+Mark~E. Russiovich.
+\newblock {Processes, Threads, and Jobs in the Windows Operating System}.
+\newblock
+  \url{https://www.microsoftpressstore.com/articles/article.aspx?p=2233328&seqNum=7/},
+  2009.
+\newblock [Online; accessed 01-May-2017].
+
+\bibitem[Uni06]{2}
+Columbia University.
+\newblock {Linux Scheduler}.
+\newblock \url{https://www.cs.columbia.edu/~smb/classes/s06-4118/l13.pdf/},
+  2006.
+\newblock [Online; accessed 01-May-2017].
+
+\end{thebibliography}
